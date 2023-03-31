@@ -45,6 +45,7 @@ export default function Pokemon({ pokemon }) {
         src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`}
         width={300}
         height={300}
+        alt={pokemon.name}
       />
       <div>
         <h3>Número:</h3>

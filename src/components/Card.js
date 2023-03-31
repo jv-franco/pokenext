@@ -8,6 +8,7 @@ export default function Card({ pokemon }) {
         src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`}
         width={300}
         height={300}
+        alt={pokemon.name}
       />
       <p className="my-4 bg-red-500 rounded-md p-1 font-semibold flex justify-center items-center">
         #{pokemon.id}
