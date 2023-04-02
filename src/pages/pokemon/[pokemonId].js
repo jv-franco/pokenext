@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+
 export const getStaticPaths = async () => {
   const maxPokemons = 251;
   const api = "https://pokeapi.co/api/v2/pokemon/";
@@ -7,11 +8,10 @@ export const getStaticPaths = async () => {
   const res = await fetch(`${api}/?limit=${maxPokemons}`);
   const data = await res.json();
 
-  // params
-
-  const paths = data.results.map((pokemon, index) => {
+  const paths = data.results.map((pokemon) => {
+    const id = pokemon.url.split("/")[6];
     return {
-      params: { pokemonId: (index + 1).toString() },
+      params: { pokemonId: id.toString() },
     };
   });
 
@@ -24,7 +24,19 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async (context) => {
   const id = context.params.pokemonId;
 
+  if (id <= 0) {
+    return {
+      notFound: true,
+    };
+  }
+
   const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
+
+  if (!res.ok) {
+    return {
+      notFound: true,
+    };
+  }
 
   const data = await res.json();
 
@@ -32,13 +44,14 @@ export const getStaticProps = async (context) => {
     props: { pokemon: data },
   };
 };
+
 export default function Pokemon({ pokemon }) {
   return (
-    <div className="flex flex-col items-center  ">
-      <Link className="btn " href={"/"}>
+    <div className="flex flex-col items-center">
+      <Link className="btn" href="/">
         Voltar
       </Link>
-      <h1 className="capitalize text-4xl my-2  font-semibold text-center bg-neutral-700 px-10 py-4 text-white">
+      <h1 className="capitalize text-4xl my-2 font-semibold text-center bg-neutral-700 px-10 py-4 text-white">
         {pokemon.name}
       </h1>
       <Image
@@ -65,7 +78,7 @@ export default function Pokemon({ pokemon }) {
         </div>
       </div>
       <div className="data-container flex items-center justify-center mt-1">
-        <div className="flex border-r-2  items-center justify-center px-4 flex-col">
+        <div className="flex border-r-2 items-center justify-center px-4 flex-col">
           <h4>Altura:</h4>
           <p>{pokemon.height * 10} cm</p>
         </div>
