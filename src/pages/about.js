@@ -1,5 +1,5 @@
 import Image from "next/image";
-
+import charizard from "../images/charizard.png";
 export default function About() {
   return (
     <div className=" flex  flex-col items-center">
@@ -8,7 +8,7 @@ export default function About() {
       <Image
         className="mt-5"
         alt="charizard"
-        src={"/images/charizard.png"}
+        src={charizard}
         width={300}
         height={300}
       />

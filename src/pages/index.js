@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Card from "../components/Card.js";
 import { useState } from "react";
+import pokeball from "../images/pokeball.png";
 export async function getStaticProps() {
   const maxPokemons = 251;
   const api = "https://pokeapi.co/api/v2/pokemon/";
@@ -37,12 +38,7 @@ export default function Home({ pokemons }) {
         <h1 className="text-5xl text-red-500 font-bold mr-2">
           Poke<span className="text-neutral-700">Next</span>
         </h1>
-        <Image
-          src={"/images/pokeball.png"}
-          width={50}
-          height={50}
-          alt="PokeNext"
-        />
+        <Image src={pokeball} width={50} height={50} alt="PokeNext" />
       </div>
 
       <div className="pokemon-container">
